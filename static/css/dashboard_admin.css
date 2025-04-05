@@ -1,0 +1,132 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.dashboard-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-container h2 {
+    color: #1e3c72;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.dashboard-container h3 {
+    color: #2a5298;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.btn-danger {
+    background: #dc3545;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.table {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background: #2a5298;
+    color: #fff;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-primary, .btn-secondary {
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #1e3c72;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+canvas {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1.5rem;
+    }
+
+    .card-body {
+        font-size: 0.9rem;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .dashboard-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-container h3 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+}

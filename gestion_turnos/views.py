@@ -9,9 +9,12 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 import logging
 from django.contrib import messages
-
-
-
+import csv
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from .resources import TurnoResource
+from django.http import HttpResponse
 
 
 
@@ -86,6 +89,34 @@ def dashboard_admin(request):
     turnos_atendidos = turnos.filter(estado='atendido').count()
     turnos_finalizados = turnos.filter(estado='finalizado').count()
     
+    if request.method == 'POST':
+        if 'export_csv' in request.POST:
+            # Exportar a CSV
+            turno_resource = TurnoResource()
+            dataset = turno_resource.export()
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="turnos.csv"'
+            return response
+        elif 'export_pdf' in request.POST:
+            # Exportar a PDF
+            buffer = BytesIO()
+            p = canvas.Canvas(buffer, pagesize=letter)
+            p.setFont("Helvetica", 12)
+            p.drawString(100, 750, "Reporte de Turnos")
+            y = 700
+            for turno in turnos:
+                p.drawString(50, y, f"ID: {turno.id} | Estudiante: {turno.estudiante.nombre} | Tipo: {turno.tipo_turno} | Estado: {turno.estado}")
+                y -= 20
+                if y < 50:
+                    p.showPage()
+                    y = 750
+            p.showPage()
+            p.save()
+            buffer.seek(0)
+            response = HttpResponse(buffer, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="turnos.pdf"'
+            return response
+
     return render(request, 'gestion_turnos/dashboard_admin.html', {
         'total_turnos': total_turnos,
         'turnos_espera': turnos_espera,
